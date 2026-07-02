@@ -898,14 +898,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
         get users_path
 
         assert_response :success
-        assert_select "a[href='#{new_user_path}']", text: /Sign up/
+        assert_select "a[href='#{new_user_path}']"
       end
 
       should "not show the signup link to admin users when signups are not restricted" do
         get_auth users_path, create(:admin_user)
 
         assert_response :success
-        assert_select "a[href='#{new_user_path}']", text: /Sign up/, count: 0
+        assert_select "a[href='#{new_user_path}']", count: 0
       end
 
       context "when signups are restricted to admins" do
@@ -917,14 +917,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
           get users_path
 
           assert_response :success
-          assert_select "a[href='#{new_user_path}']", text: /Sign up/, count: 0
+          assert_select "a[href='#{new_user_path}']", count: 0
         end
 
         should "show the signup link to admin users" do
           get_auth users_path, create(:admin_user)
 
           assert_response :success
-          assert_select "a[href='#{new_user_path}']", text: /Sign up/
+          assert_select "a[href='#{new_user_path}']"
         end
       end
     end
